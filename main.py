@@ -33,7 +33,7 @@ def main(token=None, name=None, prefix=None):
     # Note that command_prefix is a required but essentially unused paramater.
     # Setting help_command=False ensures that discord.py does not create a /help command.
     # Enabling self_bot ensures that the bot does not try and parse messages that start with "/".
-    bot = Bot(command_prefix="/", self_bot=True, help_command=False, intents=Intents.default())
+    bot = Bot(command_prefix="/", self_bot=True, intents=Intents.default())
     slash = SlashCommand(bot)
     
     @bot.event
