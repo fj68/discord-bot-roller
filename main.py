@@ -1,4 +1,4 @@
-from discord.ext.commands import Bot
+from discord import Client
 from discord_slash import SlashCommand
 import os
 import traceback
@@ -24,13 +24,12 @@ class Dice:
 
 def main(token=None, name=None, prefix=None):
     TOKEN = token or os.getenv(f"{APP}_TOKEN")
-    COMMAND_PREFIX = name or os.getenv(f"{APP}_COMMAND_PREFIX", default='/')
-    COMMAND_NAME = prefix or os.getenv(f"{APP}_COMMAND_NAME", default='roll')
+    COMMAND_NAME = name or os.getenv(f"{APP}_COMMAND_NAME", default='roll')
 
     if TOKEN is None:
         raise RuntimeError('Token for Discord Bot API is not provided.')
     
-    bot = Bot(command_prefix=COMMAND_PREFIX)
+    bot = Client()
     slash = SlashCommand(bot)
     
     @bot.event
@@ -58,7 +57,5 @@ if __name__ == '__main__':
                         help="Discord Bot API Token [{API}_TOKEN]")
     parser.add_argument('--name', metavar="NAME",
                         help="Command Name (default: 'roll') [{API}_COMMAND_NAME]")
-    parser.add_argument('--prefix', metavar="PREFIX",
-                        help="Command Prefix (default: '/') [{API}_COMMAND_PREFIX]")
     args = parser.parse_args()
     main(**vars(args))
