@@ -1,6 +1,5 @@
 from discord import Intents
 from discord.ext.commands import Bot
-from discord_slash import SlashCommand
 import os
 import traceback
 import argparse
@@ -30,11 +29,7 @@ def main(token=None, name=None, prefix=None):
     if TOKEN is None:
         raise RuntimeError('Token for Discord Bot API is not provided.')
     
-    # Note that command_prefix is a required but essentially unused paramater.
-    # Setting help_command=False ensures that discord.py does not create a /help command.
-    # Enabling self_bot ensures that the bot does not try and parse messages that start with "/".
-    bot = Bot(command_prefix="/", self_bot=True, intents=Intents.default())
-    slash = SlashCommand(bot)
+    bot = Bot(command_prefix="/", intents=Intents.default())
     
     @bot.event
     async def on_command_error(ctx, error):
@@ -42,10 +37,7 @@ def main(token=None, name=None, prefix=None):
         msg = ''.join(traceback.TracebackException.from_exception(original).format())
         await ctx.send(msg)
     
-    @slash.slash(
-        name=COMMAND_NAME,
-        description="Roll dice e.g. 3d2+8"
-    )
+    @bot.command(name=COMMAND_NAME)
     async def roll_command(ctx, *args):
         pattern = ' '.join(args)
         if pattern:
