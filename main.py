@@ -1,4 +1,6 @@
+import discord
 from discord.ext.commands import Bot
+from discord_slash import SlashCommand
 import os
 import traceback
 import argparse
@@ -29,7 +31,8 @@ def main(token=None, name=None, prefix=None):
     if TOKEN is None:
         raise RuntimeError('Token for Discord Bot API is not provided.')
     
-    bot = Bot(command_prefix=COMMAND_PREFIX)
+    bot = Bot(command_prefix=COMMAND_PREFIX, intents=discord.Intents.default)
+    slash = SlashCommand(bot)
     
     @bot.event
     async def on_command_error(ctx, error):
@@ -37,7 +40,10 @@ def main(token=None, name=None, prefix=None):
         msg = ''.join(traceback.TracebackException.from_exception(original).format())
         await ctx.send(msg)
     
-    @bot.command(name=COMMAND_NAME)
+    @slash.slash(
+        name=COMMAND_NAME,
+        description="Roll dice e.g. 3d2+8"
+    )
     async def roll_command(ctx, *args):
         pattern = ' '.join(args)
         await ctx.reply(str(Dice(pattern)), mention_author=False)
