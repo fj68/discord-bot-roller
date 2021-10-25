@@ -1,4 +1,4 @@
-from discord.ext.commands import Bot
+from discord import Client
 from discord_slash import SlashCommand
 import os
 import traceback
@@ -29,7 +29,7 @@ def main(token=None, name=None, prefix=None):
     if TOKEN is None:
         raise RuntimeError('Token for Discord Bot API is not provided.')
     
-    bot = Bot()
+    bot = Client()
     slash = SlashCommand(bot)
     
     @bot.event
