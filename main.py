@@ -1,4 +1,5 @@
-from discord import Client
+from discord import Intents
+from discord.ext.commands import Bot
 from discord_slash import SlashCommand
 import os
 import traceback
@@ -29,7 +30,10 @@ def main(token=None, name=None, prefix=None):
     if TOKEN is None:
         raise RuntimeError('Token for Discord Bot API is not provided.')
     
-    bot = Client()
+    # Note that command_prefix is a required but essentially unused paramater.
+    # Setting help_command=False ensures that discord.py does not create a /help command.
+    # Enabling self_bot ensures that the bot does not try and parse messages that start with "/".
+    bot = Bot(command_prefix="/", self_bot=True, help_command=False, intents=Intents.default())
     slash = SlashCommand(bot)
     
     @bot.event
@@ -44,7 +48,8 @@ def main(token=None, name=None, prefix=None):
     )
     async def roll_command(ctx, *args):
         pattern = ' '.join(args)
-        await ctx.reply(str(Dice(pattern)), mention_author=False)
+        if pattern:
+            await ctx.reply(str(Dice(pattern)), mention_author=False)
     
     bot.run(TOKEN)
 
