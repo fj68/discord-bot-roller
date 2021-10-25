@@ -12,7 +12,7 @@ Then replied:
 
 ## Installation
 
-[Click here to add the bot in your server](https://discord.com/api/oauth2/authorize?client_id=901999374744301628&permissions=380104607744&scope=bot)
+[Click here to add the bot in your server](https://discord.com/api/oauth2/authorize?client_id=901999374744301628&permissions=277025392640&scope=bot)
 
 ## Cheatsheet
 
