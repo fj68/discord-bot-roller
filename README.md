@@ -33,6 +33,11 @@ Here are some examples from the documentation:
 
 ```sh
 git clone https://github.com/fj68/discord-bot-roller.git
+cd discord-bot-roller
+# Assuming you have Python 3.10.0 (if not, use pyenv: pyenv install 3.10.0 && pyenv local 3.10.0)
+python3 -m venv .venv
+python3 -m pip install -r requirements.txt
+# Now you go!
 ```
 
 ## License
